@@ -1,7 +1,6 @@
 #things we'll want to do with our template
 # rails -m {PATH_TO_TEMPLATE}
 # TODO:
-# Rename application.html.erb to application.html.haml
 
 gem 'compass-rails', :group => :assets
 gem 'haml-rails'
@@ -17,14 +16,40 @@ end
 # Now create a new compass project (it will be sass not scss)
 run 'compass create .'
 
-# remove print and ie stylesheets because really who uses those.
-run 'rm app/assets/stylesheets/print.css.sass'
-run 'rm app/assets/stylesheets/ie.css.sass'
+inside "app/assets/stylesheets" do
+  remove_file 'print.css.sass'
+  remove_file 'ie.css.sass'
+end
+run 'mv app/assets/stylesheets/screen.css.sass app/assets/stylesheets/styles.sass'
 
-# grab jQuery
-get "https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "app/assets/javascripts/jquery.js"
+create_file "app/views/layouts/application.haml" do <<-'FILE'
+!!!
+%html
+  %head
+    %title Project Template Title
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .main-content
+      = yield
+      %script{src: "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"}
+FILE
+end
 
-# Let the people create a controller if the want. 
+run 'rm app/views/layouts/application.html.erb'
+
+# grab @jps animation and font stuffs.
+if yes?("Do you want to pull in a keyframe mixin?")
+get "https://raw.github.com/jpschwinghamer/static-template/master/sass/_animations.sass", "app/assets/stylesheets/_animations.sass"
+get "https://raw.github.com/jpschwinghamer/static-template/master/sass/_keyframes.sass", "app/assets/stylesheets/_keyframes.sass"
+append_file "app/assets/stylesheets/styles.sass" do <<-'FILE'
+@import animations
+FILE
+end
+end
+
+# Let the people create a controller if the want.
 if yes?("Do you want to generate a controller?")
   controller_name = ask("What do you want to call your controller?")
   generate("controller", controller_name, "index")
