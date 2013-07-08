@@ -28,12 +28,12 @@ create_file "app/views/layouts/application.haml" do <<-'FILE'
   %head
     %title Project Template Title
     = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
     = csrf_meta_tags
   %body
     .main-content
       = yield
       %script{src: "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"}
+    = javascript_include_tag "application"
 FILE
 end
 
