@@ -2,11 +2,8 @@
 # rails -m {PATH_TO_TEMPLATE}
 # TODO:
 
-gem group :assets do
-  gem 'compass-rails', :group => :assets
-end
-
 gem 'haml-rails'
+gem 'compass-rails', :group "assets"
 
 run "bundle install"
 
@@ -28,17 +25,17 @@ end
 run 'mv app/assets/stylesheets/screen.css.sass app/assets/stylesheets/styles.sass'
 
 create_file "app/views/layouts/application.haml" do <<-'FILE'
-!!!
-%html
-  %head
-    %title Project Template Title
-    = stylesheet_link_tag    "application", :media => "all"
-    = csrf_meta_tags
-  %body
-    .main-content
-      = yield
-      %script{src: "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"}
-    = javascript_include_tag "application"
+  !!!
+  %html
+    %head
+      %title Project Template Title
+      = stylesheet_link_tag    "application", :media => "all"
+      = csrf_meta_tags
+    %body
+      .main-content
+        = yield
+        %script{src: "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"}
+      = javascript_include_tag "application"
 FILE
 end
 
@@ -63,7 +60,7 @@ if yes?("Do you want to generate a controller?")
   run "rm public/index.html"
   # And replace it with the newly generated page
   inject_into_file 'config/routes.rb', after: "# root :to => 'welcome#index'\n" do <<-'RUBY'
-      root to: 'pages#index'
+  root to: 'pages#index'
   RUBY
   end
 end
