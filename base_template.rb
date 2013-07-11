@@ -2,10 +2,13 @@
 # rails -m {PATH_TO_TEMPLATE}
 # TODO:
 
-gem 'compass-rails', :group => :assets
+gem groupd :assets do
+  gem 'compass-rails', :group => :assets
+end
+
 gem 'haml-rails'
 
-rake "gems:install"
+run "bundle install"
 
 # make rails generate sass files instead of scss.
 inject_into_file 'config/application.rb', after: "config.encoding = \"utf-8\"\n\n" do <<-'RUBY'
@@ -41,7 +44,7 @@ end
 
 run 'rm app/views/layouts/application.html.erb'
 
-# grab @jps animation and font stuffs.
+# Install annimation keyframes mixin?
 if yes?("Do you want to pull in a keyframe mixin?")
 get "https://raw.github.com/jpschwinghamer/static-template/master/sass/_animations.sass", "app/assets/stylesheets/_animations.sass"
 get "https://raw.github.com/jpschwinghamer/static-template/master/sass/_keyframes.sass", "app/assets/stylesheets/_keyframes.sass"
