@@ -2,7 +2,7 @@
 # rails -m {PATH_TO_TEMPLATE}
 # TODO:
 
-gem groupd :assets do
+gem group :assets do
   gem 'compass-rails', :group => :assets
 end
 
