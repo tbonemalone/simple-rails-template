@@ -5,6 +5,8 @@
 gem 'compass-rails', :group => :assets
 gem 'haml-rails'
 
+rake "gems:install"
+
 # make rails generate sass files instead of scss.
 inject_into_file 'config/application.rb', after: "config.encoding = \"utf-8\"\n\n" do <<-'RUBY'
     # Generate sass instead of scss
