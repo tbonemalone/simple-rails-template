@@ -3,7 +3,7 @@
 # TODO:
 
 gem 'haml-rails'
-gem 'compass-rails', :group "assets"
+gem 'compass-rails'
 
 run "bundle install"
 
