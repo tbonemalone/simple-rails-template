@@ -1,6 +1,5 @@
-#things we'll want to do with our template
+# things we'll want to do with our template
 # rails -m {PATH_TO_TEMPLATE}
-# TODO:
 
 gem 'haml-rails'
 gem 'compass-rails'
@@ -16,7 +15,7 @@ RUBY
 end
 
 # Now create a new compass project (it will be sass not scss)
-run 'compass create .'
+run 'compass create app/assets/stylesheets'
 
 inside "app/assets/stylesheets" do
   remove_file 'print.css.sass'
@@ -25,17 +24,17 @@ end
 run 'mv app/assets/stylesheets/screen.css.sass app/assets/stylesheets/styles.sass'
 
 create_file "app/views/layouts/application.haml" do <<-'FILE'
-  !!!
-  %html
-    %head
-      %title Project Template Title
-      = stylesheet_link_tag    "application", :media => "all"
-      = csrf_meta_tags
-    %body
-      .main-content
-        = yield
-        %script{src: "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"}
-      = javascript_include_tag "application"
+!!!
+%html
+  %head
+    %title Project Template Title
+    = stylesheet_link_tag    "application", :media => "all"
+    = csrf_meta_tags
+  %body
+    .main-content
+      = yield
+      %script{src: "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"}
+    = javascript_include_tag "application"
 FILE
 end
 
