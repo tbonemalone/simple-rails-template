@@ -1,10 +1,5 @@
-# things we'll want to do with our template
-# rails -m {PATH_TO_TEMPLATE}
-
-gem 'haml-rails'
-gem 'compass-rails'
-
-run "bundle install"
+# To use run:
+# rails new {Your app name}  -m {PATH_TO_TEMPLATE}
 
 # make rails generate sass files instead of scss.
 inject_into_file 'config/application.rb', after: "config.encoding = \"utf-8\"\n\n" do <<-'RUBY'
@@ -14,14 +9,12 @@ inject_into_file 'config/application.rb', after: "config.encoding = \"utf-8\"\n\
 RUBY
 end
 
-# Now create a new compass project (it will be sass not scss)
-run 'compass create app/assets/stylesheets'
+gem 'haml-rails'
+gem 'compass-rails'
+run 'bundle install'
 
-inside "app/assets/stylesheets" do
-  remove_file 'print.css.sass'
-  remove_file 'ie.css.sass'
-end
-run 'mv app/assets/stylesheets/screen.css.sass app/assets/stylesheets/styles.sass'
+run "touch app/assets/stylesheets/styles.sass"
+run 'rm app/views/layouts/application.html.erb'
 
 create_file "app/views/layouts/application.haml" do <<-'FILE'
 !!!
@@ -37,8 +30,6 @@ create_file "app/views/layouts/application.haml" do <<-'FILE'
     = javascript_include_tag "application"
 FILE
 end
-
-run 'rm app/views/layouts/application.html.erb'
 
 # Install annimation keyframes mixin?
 if yes?("Do you want to pull in a keyframe mixin?")
